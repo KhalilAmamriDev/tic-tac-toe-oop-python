@@ -41,14 +41,25 @@ class Game:
             clear_screen()
     def play_game(self):
         while True:
+            clear_screen()
             self.play_turn()
-            if self.check_win() or self.check_draw():
+            self.board.display_board()
+            if self.check_win():
                 choice = self.menu.display_endgame_menu()
                 if choice == "1":
                     self.restart_game()
                 else:
                     self.quit_game()
                     break
+            elif self.check_draw():
+                print("It's a draw!")
+                choice = self.menu.display_endgame_menu()
+                if choice == "1":
+                    self.restart_game()
+                else:
+                    self.quit_game()
+                    break
+            
     
 
     def check_win(self):
@@ -88,6 +99,7 @@ class Game:
                 print("Invalid input. Please enter a number between 1 and 9.")
         self.switch_player()
 
+        
 
     def switch_player(self):
         self.current_player_index = (self.current_player_index + 1) % 2
